@@ -1,10 +1,10 @@
 Presentations 
 ==================
 
-#Push Notification Server built on NodeJS
+##Push Notification Server built on NodeJS
 
 *	prerequisites: View installation of RevealJS presentations <https://github.com/hakimel/reveal.js#installation>
-*	in the command prompt navigate to downloaded folder and run ``grunt serve``
+*	in the command prompt navigate to ``downloadedFolder/thePresentationYouWantToView`` and run ``grunt serve``
 *	open browser and type in address bar ``http://localhost:8000/``
 
 ###Powered by RevealJS
