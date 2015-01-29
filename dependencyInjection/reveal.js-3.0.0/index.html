@@ -393,6 +393,67 @@ function test() {
 
 				</section>
 
+				<section>
+					5 minute break?
+				</section>
+
+				<section>
+					<h1>Actor Model</h1>
+				</section>
+
+				<section>
+					<h1>Sample case</h1>
+					<p>
+						<a href="http://en.wikipedia.org/wiki/Dining_philosophers_problem">The Dining philosophers problem</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Dummy decision</h2>
+					<p class="fragment fade-in">
+						All the philosophers to reach for the left fork whenever possible...
+						All the threads will race for the forks, and here we have a potential lock.
+					</p>
+				</section>
+
+				<section>
+					<h2>More adequate decision</h2>
+					<p class="fragment fade-in">
+						Use a "Waiter" object (<a href="http://en.wikipedia.org/wiki/Mutual_exclusion">Mutex</a>)
+					</p>
+				</section>
+
+				<section>
+					<p>Still... there's still potential time that a deadlock might occur</p>
+				</section>
+
+				<section>
+					<ol>
+						<li>First philosopher asks for a fork. He gets a yes.</li>
+						<li>Second philosopher asks for a fork. He gets a yes.</li>
+						<li>By the time the second has gotten a for, the first has already taken it.</li>
+					</ol>
+				</section>
+
+				<section>
+					<p>Enter Actor Model1</p>
+				</section>
+
+				<section>
+					<h2>Potential pitfal</h2>
+					<p class="fragment fade-in">
+						 <a href="http://en.wikipedia.org/wiki/Schizophrenia_%28object-oriented_programming%29">self schizophrenia</a> dew to <a href="http://en.wikipedia.org/wiki/Delegation_(programming)">delegation</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Advantages?</h2>
+				</section>
+
+				<section>
+					<h1>Fin</h1>
+				</section>
+
 			</div>
 
 		</div>

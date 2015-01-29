@@ -258,3 +258,71 @@ function main() {
 
 Design doc:
 https://docs.google.com/document/d/1fTR4TcTGbmExa5w2SRNAkM1fsB9kYeOvfuiI99FgR24/edit#heading=h.2e8op9ntdrm0
+
+
+##########################################################################
+#####################Actor Model
+
+Sample case:
+The Dining philosophers problem
+<!-- http://en.wikipedia.org/wiki/Dining_philosophers_problem -->
+
+
+Dummy decision:
+All the philosophers to reach for the left fork whenever possible...
+
+All the threads will race for the forks, and here we have a potential lock.
+
+More adequate decision:
+Use a "Waiter" object (Mutex)
+<!-- Add link to Mutex description -->
+
+that will be asked by the philosophers for atleast 2 free forks.
+
+
+Still... there's still potential time that a deadlock might occur:
+
+First philosopher asks for a fork. He gets a yes.
+Second philosopher asks for a fork. He gets a yes.
+
+By the time the second has gotten a for, the first has already taken it.
+
+______Actor Model_______
+An actor is a computational entity that in response to message it receives,
+can concurrently:
+
+* Send a finite number of messages to other actors
+* Create a finite number of new actors
+* Designate the behavior to be used for the next message it receives
+
+There's no assumed sequence to the above actions and they could be carried
+out in parallel.
+
+Recepients of messages are identified by address. An actor can communicate
+only with addresses it has. It can obtain those from a message it receives,
+or if the address is for an actor it has itself created.
+
+
+
+#### Back to the problem
+
+Applying this solution we can guarantee to ourselves concurrency for our
+waiter and philosophers.
+
+
+Afcors the Actor model can be applied for far more complex situations, but
+the example is sufficient.
+
+
+____ Potential pitfal - self schizophrenia dew to delegation
+<!-- http://en.wikipedia.org/wiki/Schizophrenia_%28object-oriented_programming%29 -->
+
+Base class defines method foo
+
+Child class extends Base in some matter and defines bar
+
+bar method makes a call to foo method when invoked, but
+foo is executed in the context of Base.
+
+____Advantages
+
