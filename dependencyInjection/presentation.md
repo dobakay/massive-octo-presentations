@@ -175,3 +175,86 @@ function MyController($scope, greeter) {
       "Note: Angular uses constructor injectin"
       GJ!
  -->
+
+
+########IN ANGULAR 2.0#########
+
+
+Will be pretty much the same as the role of the $injector service
+<!-- https://docs.angularjs.org/api/auto/service/$injector --> in Angular 1.x,
+but won't be limited to instantiating Angular providers.
+
+
+Sample injection
+
+Before:
+
+<!--
+  var injector = new Injector();
+  new AppView();
+  new Filters();
+ -->
+
+After
+<!--
+  var injector = new Injector();
+  injector.get(AppView);
+  injector.get(Filters);
+ -->
+
+Injector.get( tokenParameter );
+
+Token can be a string/Object etc. ( thnx to ES6 )
+Returns a singleton.
+
+
+What the injector is for - breaking up manually maintained dependencies
+and modularizing code.
+
+<!--
+import {Inject} from 'di/annotations';
+    import {Electricity} from '../electricity';
+
+    @Inject(Electricity)
+    export class Heater {
+      constructor(electricity) {
+        this.electricity = electricity;
+      }
+
+      on() {
+        console.log('Turning on the coffee heater...');
+      }
+
+      off() {
+        console.log('Turning off the coffee heater...');
+      }
+    }
+ -->
+
+We can also do mocks
+
+<!--
+import {Provide} from 'di/annotations';
+import {CoffeeMaker} from './coffee_maker/coffee_maker';
+
+@Provide(CoffeeMaker)
+class MockCoffeeMaker {
+  brew() { /* brew brew brew coffee*/}
+}
+
+export MockCoffeeMaker;
+
+// and in the test
+
+import {MockCoffeeMaker} from './mocks/coffee_maker';
+
+function main() {
+  var injector new Injector([MockCoffeeMaker]);
+  var coffeeMaker = injector.get(CoffeeMaker);
+
+  coffeeMaker.brew();
+}
+  -->
+
+Design doc:
+https://docs.google.com/document/d/1fTR4TcTGbmExa5w2SRNAkM1fsB9kYeOvfuiI99FgR24/edit#heading=h.2e8op9ntdrm0

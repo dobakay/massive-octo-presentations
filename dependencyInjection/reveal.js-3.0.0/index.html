@@ -48,17 +48,17 @@
 				<section>
 					<h2>Sample case</h2>
 										<pre><code data-trim contenteditable>
-function Base() {
+function NeededComponent() {
 	this.doesStuff = function () { }
 }
 
-function Child() {
-  var baseInstance = new Base(); // tight coupling
+function SomeClass() {
+  var componentInstance = new NeededComponent(); // tight coupling
 
   this.doesOtherStuffToo = function () {
-  	// does stuff
+  	// does other stuff
 
-  	baseInstance.doesStuff();
+  	componentInstance.doesStuff();
   }
 }
 					</code></pre>
@@ -68,17 +68,17 @@ function Child() {
 					<section>
 						<h1>Solution?</h1>
 						<pre><code data-trim contenteditable>
-function Base() {
+function NeededComponent() {
 	this.doesStuff = function () { }
 }
 
-function Child( baseClassInstance ) {
-  var baseInstance = baseClassInstance // still tight?
+function Child( componentClassInstance ) {
+  var componentInstance = componentClassInstance // still tight?
 
   this.doesOtherStuffToo = function () {
-  	// does stuff
+  	// does other stuff
 
-  	baseInstance.doesStuff();
+  	componentInstance.doesStuff();
   }
 }
 					</code></pre>
@@ -93,17 +93,17 @@ interface iBase {
 	virtual void doesStuff(); //something along those lines
 }
 
-class Base implements iBase{
+class Component implements iComponent{
 	public void doesStuff() { /* implements virtual method*/ }
 }
 
-class Child {
-	Child( iBase ) {
-	 this.base = iBase
+class SomeClass {
+	SomeClass( iComponent ) {
+	 this.component = iComponent
 	}
 	// etc.
 }
-child = new Child( new Base() );
+someClass = new SomeClass( new Component() );
 					</code></pre>
 					</section>
 
@@ -163,10 +163,6 @@ child = new Child( new Base() );
 					<li>
 						<a href="">Interface Injection</a>
 					</li>
-					<li>
-						<a href="">Constructor Injection</a>
-					</li>
-
 					</ul>
 				</section>
 
@@ -198,7 +194,7 @@ public class Client implements ServiceSetter {
 				<section>
 					<h1>Overall...</h1>
 					<p class="fragment grow">
-						stackoverflow quote: "Dependency Injection" is a 25-dollar term for a 5-cent concept.
+						StackoverFlow quote: "Dependency Injection" is a 25-dollar term for a 5-cent concept.
 					</p>
 				</section>
 
@@ -230,7 +226,7 @@ public class Client implements ServiceSetter {
 
 				<section>
 					<h2>From Documentation 1.x</h2>
-					<p> Three (Annotation-wise) ways to do DI in angular </p>
+					<p> Three (regarding the declaration style) ways to do DI in angular </p>
 					<aside class="notes">
 						* The component can create the dependency, typically using the new operator.
 						* The component can look up the dependency, by referring to a global variable.
@@ -307,7 +303,7 @@ var greeter = injector.get('greeter');
 				</section>
 
 				<section>
-					<p>The solution to LoD problem</p>
+					<p>The solution to <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">LoD</a> problem</p>
 					<pre><code>
 <div ng-controller="MyController">
   <button ng-click="sayHello()">Hello</button>
@@ -325,22 +321,76 @@ function MyController($scope, greeter) {
 					<p class="fragment fade-in">GJ Angular people!</p>
 				</section>
 
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						reveal.js comes with a few themes built in: <br>
-						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
+				<section>
+					<h2>Going next gen</h2>
+					<p>ng v2.0</p>
+				</section>
+
+				<section>
+					<p class="fragment fade-in">
+						<pre><code>
+Injector.get( tokenParameter );
+// token will be a string/Object etc.
+// key for the value ( tnx to ES6 )
+						</code></pre>
 					</p>
+					<p class="fragment fade-in">
+						Will work pretty much the same as the current
+						<a href="https://docs.angularjs.org/api/auto/service/$injector">$injector</a> but it won't be limited to instantiating Angular providers... wuteva that means.
+					</p>
+				</section>
+
+				<section>
+					<pre><code>
+import {Inject} from 'di/annotations';
+import {Electricity} from '../electricity';
+@Inject(Electricity)
+export class Heater {
+  constructor(electricity) {
+    this.electricity = electricity;
+  }
+  on() {
+    console.log('Turning on the coffee heater...');
+  }
+  off() {
+    console.log('Turning off the coffee heater...');
+  }
+}
+					</code></pre>
+				</section>
+
+				<section><pre><code>
+// sample code for Mocks
+import {Provide} from 'di/annotations';
+import {CoffeeMaker} from './coffee_maker/coffee_maker';
+
+@Provide(CoffeeMaker)
+class MockCoffeeMaker {
+  brew() { /* brew brew brew coffee*/}
+}
+export MockCoffeeMaker;
+
+				</code></pre></section>
+
+				<section>
+					<pre><code>
+// and in the test
+
+import {MockCoffeeMaker} from './mocks/coffee_maker';
+
+function test() {
+  var injector new Injector([MockCoffeeMaker]);
+  var coffeeMaker = injector.get(CoffeeMaker);
+
+  coffeeMaker.brew();
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<a href="https://docs.google.com/document/d/1fTR4TcTGbmExa5w2SRNAkM1fsB9kYeOvfuiI99FgR24/edit#heading=h.2e8op9ntdrm0
+">Design Docs</a>
+
 				</section>
 
 			</div>
